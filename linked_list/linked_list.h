@@ -11,4 +11,8 @@ struct node
 };
 
 ptrToList MakeEmpty(ptrToList L);
+int IsEmpty(ptrToList L);
+int IsLast(ptrToList L);
+ptrToList Find(int x, ptrToList L);
+
 #endif
