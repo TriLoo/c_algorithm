@@ -2,6 +2,7 @@
 
 ptrToList MakeEmpty(ptrToList L)
 {
+
 	return L;
 }
 
