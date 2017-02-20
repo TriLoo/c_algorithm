@@ -9,6 +9,8 @@ typedef struct node* ptrToList;
 typedef ptrToList List;
 typedef ptrToList Position;
 
+void InitializeCursorSpace(void);
+
 struct node 
 {
 	int num;

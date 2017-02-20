@@ -1,7 +1,11 @@
 #include "linked_list.h"
 
-/* test wether the list is empty*/
+#define SpaceSize 10
 
+/* define CursorSpace array*/
+struct node CursorSpace[ SpaceSize ];
+
+/* test wether the list is empty*/
 int IsEmpty(List L)
 {
 	/*
@@ -100,5 +104,16 @@ void DeleteList(List L)
 		tmp = P->next;
 		free(P);
 		P = tmp;
+	}
+}
+
+/* Implement CursorSpace initialization*/
+void InitializeCursorSpace(ptrToList L)
+{
+	int i = 1;
+	for(i=0; i<SpaceSize; i++)
+	{
+		L[i]->num = 0;
+		L[i]->next = NULL;
 	}
 }
