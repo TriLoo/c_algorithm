@@ -1,15 +1,11 @@
 #include "linked_list.h"
 
-<<<<<<< HEAD
-
-=======
 #define SpaceSize 10
 
 /* define CursorSpace array*/
 struct node CursorSpace[ SpaceSize ];
 
 /* test wether the list is empty*/
->>>>>>> 2a2a169a5a9b19a17279c47eba94dafcc7d7fb1d
 int IsEmpty(List L)
 {
 	/*
@@ -25,7 +21,6 @@ int IsEmpty(List L)
  * here, the L is unused.
  * */
 int IsLast(Position P, List L)
-<<<<<<< HEAD
 {
 	return P->next==NULL;
 }
@@ -44,10 +39,6 @@ Position Find(int x, List L)
 		}
 	}
 	return tmp;
-=======
-{
-	return P->next==NULL;
-}
 
 /* function find, return the position of to be found element*/
 Position Find(int x, List L)
@@ -140,7 +131,6 @@ void InitializeCursorSpace(ptrToList L)
 		L[i]->num = 0;
 		L[i]->next = NULL;
 	}
->>>>>>> 2a2a169a5a9b19a17279c47eba94dafcc7d7fb1d
 }
 
 /* Delete a element from the list*/
