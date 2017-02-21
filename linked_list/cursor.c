@@ -86,3 +86,24 @@ void Insert(int x, Cursor L, Position P)
 	CursorSpace[tmp].next = CursorSpace[P].next;
 	CursorSpace[P].next = tmp;
 }
+
+Position FindPrevious(int x, Cursor L)
+{
+	/*
+	Positon P, tmp;
+	P = CursorSpace[L].next;
+	tmp = P;
+	while(P && CursorSpace[P] != x)
+	{
+		tmp = tmp;
+		P = CursorSpace[P].next;
+	}
+	return tmp;
+	*/
+	Position P;
+	P = L;
+	while(CursorSpace[P].next && CursorSpace[CursorSpace[P].next].num != x)
+		P = CursorSpace[P].next;
+
+	return P;
+}

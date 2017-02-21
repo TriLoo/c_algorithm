@@ -17,6 +17,7 @@ static void CursroFree(Position P); //delete an element from the array.
 int IsEmpty(Cursor L);
 int IsLast(Cursor L, Position P);
 Position Find(int x, Cursor L);
+Position FindPrevious(int x, Cursor L);
 void Delete(int x, Cursor L);
 void Insert(int x, Cursor L, Position P);
 #endif
