@@ -8,17 +8,14 @@ struct node;
 typedef struct node* ptrToList;
 typedef ptrToList List;
 typedef ptrToList Position;
-<<<<<<< HEAD
-=======
 
-void InitializeCursorSpace(void);
->>>>>>> 2a2a169a5a9b19a17279c47eba94dafcc7d7fb1d
-
+/* struct node */
 struct node 
 {
 	int num;
 	Position next;
 };
+
 
 List MakeEmpty(List L);
 int IsEmpty(Position P, List L);
@@ -27,13 +24,10 @@ Position Find(int x, List L);
 void Delete(int x, List L);
 Position FindPrevious(int x, List L);
 void Insert(int x, List L, Position P);
-<<<<<<< HEAD
+
 /*
 void DeleteList(List L);
-=======
 void DeleteList(List L);
-/*
->>>>>>> 2a2a169a5a9b19a17279c47eba94dafcc7d7fb1d
 Position Header(List L);
 Position First(List L);
 Position Advance(Position P);
