@@ -11,3 +11,9 @@ This repo implement the examples of <data structure & alogrithm> in c or C++.
 3. Chapter* directories
 	
 	These directories include the corresponding source code in this book: c++ primer and some remarks
+
+4. ScanCUDA
+
+	This dir include the Scan algorithm based on CUDA. 
+
+	See "GPU Gem 3" chapter 39 for more details. https://developer.nvidia.com/gpugems/GPUGems3/gpugems3_ch39.html
