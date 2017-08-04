@@ -1,0 +1,65 @@
+#include <iostream>
+
+using namespace std;
+
+class HasPtr
+{
+	public:
+		//HasPtr() = default;
+		HasPtr(const string &s = string()):ps(new string(s)), i(0){}
+		HasPtr(const HasPtr &t):i(t.i), ps(new string(*t.ps)){}
+		HasPtr & operator=(const HasPtr &ha);
+		/*
+		HasPtr & operator=(const HasPtr &ha)
+		{
+			ps = new string(*ha.ps);
+			i = ha.i;
+		}
+		*/
+
+		void setInt(int t){i = t;}
+		int readInt(){return i;}
+		void setString(string s){*ps = s;};
+		string readString(){return *ps;}
+		~HasPtr(){delete ps;}
+	private:
+		string *ps;
+		int i;
+};
+
+HasPtr& HasPtr::operator=(const HasPtr &ha)
+{
+	auto newp = new string(*ha.ps);
+
+	delete ps;         // must free the memory, otherwise, the memory is leaking
+
+	ps = newp;
+
+	i = ha.i;
+
+	return *this;
+}
+
+int main(void)
+{
+	HasPtr t1("hello");
+	t1.setInt(10);
+	HasPtr t2(t1);
+
+	t2.setInt(5);
+	t2.setString("world");
+	
+	cout << "t1.i = " << t1.readInt() << endl;
+	cout << "t2.i = " << t2.readInt() << endl;
+	cout << "t1.i = " << t1.readString() << endl;
+	cout << "t2.i = " << t2.readString() << endl;
+
+	t2 = t1;
+	cout << "t2.i = " << t2.readInt() << endl;
+	cout << "t2.i = " << t2.readString() << endl;
+
+	
+
+	return 0;
+}
+
