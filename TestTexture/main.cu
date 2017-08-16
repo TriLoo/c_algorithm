@@ -2,6 +2,8 @@
  *  This file is attempted to test the relation ship between the bounded device memory and bounding texture memory.
  *  Result :
  *  When the values in device memory changed, the texture memory should change as well, as long as the BOUNDING relationship is working.
+ *	When you bind linear memory to texture, u should use tex1Dfetch to fetch the contents in texture memory.
+ * 	tex1D API is used only to one-dimension array
  */
 
 
