@@ -2,6 +2,7 @@ from mxnet import gluon
 from mxnet import ndarray as nd
 import matplotlib.pyplot as plt
 import sys
+import utils
 #from utils import SGD
 from mxnet import autograd
 
@@ -10,6 +11,9 @@ def transform(data, label):
 
 mnist_train = gluon.data.vision.FashionMNIST(train=True, transform=transform)
 mnist_test = gluon.data.vision.FashionMNIST(train=False, transform=transform)
+#batch_size = 256
+
+#mnist_train, mnist_test = utils.load_data_fashion_mnist(batch_size)
 
 data, label = mnist_train[0]
 print('data.shape = ', data.shape, '\n label = ', label)
