@@ -11,7 +11,7 @@ num_input = 28 * 28
 num_output = 10
 
 num_hidden = 256
-#weight_scale = 0.01             # 正则化系数
+#weight_scale = 0.01             # 正则化系数 ?
 weight_scale = 0.1             # 正则化系数, use big avoiding overfit
 
 
