@@ -3,6 +3,11 @@ from mxnet import autograd
 from mxnet import ndarray as nd
 from mxnet import gluon
 import random
+import matplotlib as mpl
+mpl.rcParams['figure.dpi'] = 120
+import matplotlib.pyplot as plt
+import numpy as np
+
 
 def sgd_momentum(params, vs, lr, mom, batch_size):
     for param, v in zip(params, vs):
@@ -26,10 +31,10 @@ dataset = gluon.data.ArrayDataset(X, y)
 
 # get the data iterator
 def data_iter(batch_size):
-    idx = list(num_examples)
+    idx = list(range(num_examples))
     random.shuffle(idx)
     for batch_i, i in enumerate(range(0, num_examples, batch_size)):
-        j = nd.array(idx[i, min(i+batch_size, num_examples)])
+        j = nd.array(idx[i:min(i+batch_size, num_examples)])
         yield batch_i, X.take(j), y.take(j)
 
 # initialize model parameters
@@ -51,7 +56,33 @@ def net(X, w, b):
 
 # define loss function
 def square_loss(yhat, y):
-    return (yhat - y.shape(yhat.shape)) ** 2 / 2
+    return (yhat - y.reshape(yhat.shape)) ** 2 / 2
 
 # begin train model
+def train(batch_size, lr, mom, epochs, period):
+    assert period >= batch_size and period % batch_size == 0
+    [w, b], vs = init_params()
+    total_loss = [np.mean(square_loss(net(X, w, b), y).asnumpy())]
+
+    for epoch in range(1, 1+epochs):
+        if(epoch > 2):
+            lr *= .1
+        for batch_i, data, label in data_iter(batch_size):
+            with autograd.record():
+                output = net(data, w, b)
+                loss = square_loss(output, label)
+            loss.backward()
+            sgd_momentum([w, b], vs, lr, mom, batch_size)
+            if batch_i * batch_size % period == 0:
+                total_loss.append(np.mean(square_loss(net(X, w, b), y).asnumpy()))
+        print('batch size %d, learning rate: %f, epoch %d, loss %.4e'%(batch_size, lr, epoch, total_loss[-1]))
+
+    print('w:', np.reshape(w.asnumpy(), (1, -1)), ' b:', b.asnumpy()[0], '\n')
+    x_axis = np.linspace(0, epochs, len(total_loss), endpoint=True)
+    plt.semilogy(x_axis, total_loss)
+    plt.xlabel('epoch')
+    plt.ylabel('loss')
+    plt.show()
+
+train(batch_size=10, lr=.2, mom=0.9, epochs=3, period=10)
 
