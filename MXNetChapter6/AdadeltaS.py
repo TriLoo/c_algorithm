@@ -22,9 +22,6 @@ def adadelta(params, sqrs, deltas, roh, batch_size):
         delta[:] = roh * delta + (1. - roh) * g_next * g_next
         param[:] -= g_next
 
-mx.random.seed(1)
-random.seed(1)
-
 num_inputs = 2
 num_examples = 1000
 true_w = [2, -3.4]
