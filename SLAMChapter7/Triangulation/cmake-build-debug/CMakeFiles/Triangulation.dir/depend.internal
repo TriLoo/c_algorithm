@@ -5,6 +5,7 @@ CMakeFiles/Triangulation.dir/main.cpp.o
  /home/smher/myCode/SLAMs/chapter7/Triangulation/main.cpp
  /usr/local/include/opencv/cxcore.h
  /usr/local/include/opencv2/calib3d.hpp
+ /usr/local/include/opencv2/calib3d/calib3d.hpp
  /usr/local/include/opencv2/calib3d/calib3d_c.h
  /usr/local/include/opencv2/core.hpp
  /usr/local/include/opencv2/core/affine.hpp
