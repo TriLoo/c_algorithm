@@ -1,0 +1,258 @@
+#include <iostream>
+#include "vector"
+#include "cassert"
+#include "cmath"
+
+#include "opencv2/highgui.hpp"
+#include "opencv2/imgproc.hpp"
+#include "opencv2/features2d.hpp"
+#include "opencv2/calib3d.hpp"
+
+#include "Eigen/Core"
+#include "Eigen/Geometry"
+
+#include "g2o/core/base_vertex.h"
+#include "g2o/core/base_unary_edge.h"
+#include "g2o/core/block_solver.h"
+#include "g2o/core/optimization_algorithm_levenberg.h"
+#include "g2o/solvers/csparse/linear_solver_csparse.h"
+#include "g2o/types/sba/types_six_dof_expmap.h"
+
+
+using namespace std;
+using namespace cv;
+
+void find_feature_matches(Mat &imgA, Mat imgB, vector<KeyPoint>& ky1, vector<KeyPoint> &ky2, vector<DMatch> &matches)
+{
+    // storing the descriptions
+    Mat descrip1, descrip2;
+
+    Ptr<Feature2D> detector = ORB::create();
+    Ptr<DescriptorMatcher> descriptor = DescriptorMatcher::create("BruteForce-Hamming(2)");
+
+    // detect the feature points
+    detector->detect(imgA, ky1);
+    detector->detect(imgB, ky2);
+
+    // computer the description
+    detector->compute(imgA, ky1, descrip1);
+    detector->compute(imgB, ky2, descrip2);
+
+    // calculate the match
+    vector<DMatch> match;
+    descriptor->match(descrip1, descrip2, match);
+
+    // 筛选
+    double min_dist = 10000, max_dist = 0;
+
+    for(int i = 0; i < descrip1.rows; i++)
+    {
+        double dist = match[i].distance;
+        if(min_dist > dist)
+            min_dist = dist;
+        if(max_dist < dist)
+            max_dist = dist;
+    }
+
+    for (int i = 0; i < descrip1.rows; ++i) {
+        double dist = match[i].distance;
+        if(dist < max(2 * min_dist, 30.0))
+            matches.push_back(match[i]);
+    }
+
+   // for test
+   // Mat matchImg;
+   // drawMatches(imgA, ky1, imgB, ky2, matches, matchImg);
+   // imshow("Match", matchImg);
+
+   // waitKey(0);
+}
+Point2d pixel2cam ( const Point2d& p, const Mat& K )
+{
+    return Point2d
+           (
+               ( p.x - K.at<double> ( 0,2 ) ) / K.at<double> ( 0,0 ),
+               ( p.y - K.at<double> ( 1,2 ) ) / K.at<double> ( 1,1 )
+           );
+}
+
+void pose_estimation_2d2d(
+        const vector<KeyPoint>& ky1,
+        const vector<KeyPoint>& ky2,
+        const vector<DMatch>& matches,
+        Mat &R, Mat &t
+)
+{
+    // 相机内参
+    Mat K = (Mat_<double>(3, 3) << 520.9, 0, 325.1, 0, 521.0, 249.7, 0, 0, 1);
+
+    // Point2d 保存 像素坐标
+    vector<Point2d> points1, points2;
+    for(int i = 0; i < (int)matches.size(); ++i)
+    {
+        points1.push_back(ky1[matches[i].queryIdx].pt);
+        points2.push_back(ky2[matches[i].trainIdx].pt);
+    }
+
+    // 计算基础矩阵： p2^T F p1 = 0
+    Mat fundamentalMat = findFundamentalMat(points1, points2, CV_FM_8POINT);   // 八点法
+
+    //Point2d pp(325.1, 249.7);
+    //int focallen = 521;
+
+    // 计算本质矩阵
+    Mat essentialMat = findEssentialMat(points1, points2, K, RANSAC, 0.999, 1.0);
+    //Mat essentialMat = findEssentialMat(points1, points2, focallen, pp, RANSAC, 0.999, 1.0);
+
+    // 计算单应矩阵
+    Mat homographyMat = findHomography(points1, points2, RANSAC, 3, noArray(), 2000, 0.99);
+
+    // 从本质矩阵计算R, t
+    recoverPose(essentialMat, points1, points2, K, R, t);
+
+    // Test, R, t 是第二幅图像相对于第一幅图像的估计
+    //cout << "R = " << R << endl;
+    //cout << "t = " << t << endl;
+}
+
+// bundle Adjustment
+void bundleAdjustment(
+        const vector<Point3f>& pts3d,    // 相机坐标系下的三维坐标
+        const vector<Point2f>& pts2d,    // 像素坐标
+        const Mat &K,
+        Mat &R, Mat &t
+)
+{
+    // 初始化g2o
+    typedef g2o::BlockSolver<g2o::BlockSolverTraits<6, 3>> Block;
+    Block::LinearSolverType* linearSolver = new g2o::LinearSolverCSparse<Block::PoseMatrixType>();
+    Block *solver_ptr = new Block(linearSolver);
+    g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
+    g2o::SparseOptimizer optimizer;
+    optimizer.setAlgorithm(solver);
+
+    // 定义顶点, vertex
+    g2o::VertexSE3Expmap* pose = new g2o::VertexSE3Expmap();
+    Eigen::Matrix3d R_mat;
+    R_mat <<
+            R.at<double>(0, 0), R.at<double>(0, 1), R.at<double>(0, 2),
+            R.at<double>(1, 0), R.at<double>(1, 1), R.at<double>(1, 2),
+            R.at<double>(2, 0), R.at<double>(2, 1), R.at<double>(2, 2);
+    pose->setId(0);
+    pose->setEstimate(g2o::SE3Quat(R_mat, Eigen::Vector3d(t.at<double>(0, 0), t.at<double>(1, 0), t.at<double>(2, 0))));
+    optimizer.addVertex(pose);
+
+    int index = 1;
+    for (const Point3f p : pts3d)
+    {
+        g2o::VertexSBAPointXYZ* point = new g2o::VertexSBAPointXYZ();
+        point->setId(index++);
+        point->setEstimate(Eigen::Vector3d(p.x, p.y, p.z));
+        point->setMarginalized(true);
+        optimizer.addVertex(point);
+    }
+
+    // parameter: camera intrinsics
+    g2o::CameraParameters* camera = new g2o::CameraParameters(
+            K.at<double>(0, 0), Eigen::Vector2d(K.at<double>(0, 2), K.at<double>(1, 2)), 0
+    );
+    camera->setId(0);
+    optimizer.addParameter(camera);
+
+    // edges
+    index = 1;
+    for(const Point2f p : pts2d)
+    {
+        g2o::EdgeProjectXYZ2UV* edge = new g2o::EdgeProjectXYZ2UV();
+        edge->setId(index);
+        edge->setVertex(0, dynamic_cast<g2o::VertexSBAPointXYZ *>(optimizer.vertex(index)));
+        edge->setVertex(1, pose);
+        edge->setMeasurement(Eigen::Vector2d(p.x, p.y));
+        edge->setParameterId(0, 0);
+        edge->setInformation(Eigen::Matrix2d::Identity());
+        optimizer.addEdge(edge);
+        index++;
+    }
+
+    optimizer.setVerbose(true);
+    optimizer.initializeOptimization();
+    optimizer.optimize(100); // iteration = 100
+
+    cout << "After optimization: " << endl;
+    cout << "T=" << endl << Eigen::Isometry3d(pose->estimate()).matrix() << endl;
+}
+
+
+int main() {
+    std::cout << "Hello, World!" << std::endl;
+    //Mat img = imread("Barbara.jpg", IMREAD_ANYCOLOR);
+
+    // 相机内参
+    Mat K = ( Mat_<double>( 3,3 ) << 520.9, 0, 325.1, 0, 521.0, 249.7, 0, 0, 1 );
+
+    //-- 读取图像
+    Mat imgA = imread ( "1.png", CV_LOAD_IMAGE_COLOR );
+    Mat imgB = imread ( "2.png", CV_LOAD_IMAGE_COLOR );
+
+    vector<KeyPoint> ky1, ky2;
+    vector<DMatch> matches;
+    find_feature_matches ( imgA, imgB, ky1, ky2, matches );
+    cout<<"一共找到了"<<matches.size() <<"组匹配点"<<endl;
+
+    //-- 读取深度图
+    // 16-bits
+    Mat imgA_dep = imread("1_depth.png", IMREAD_UNCHANGED);
+
+    // 保存像极坐标系下的空间坐标以及像素坐标
+    vector<Point3f> pts3d;
+    vector<Point2f> pts2d;
+    for(auto m : matches)
+    {
+        ushort d = imgA_dep.ptr<ushort>( int(ky1[m.queryIdx].pt.y) )[ static_cast<int>(ky1[m.queryIdx].pt.x) ];
+        if(d == 0)
+            continue;
+        float dd = d / 1000.0;
+        Point2f ptemp = pixel2cam(ky1[m.queryIdx].pt, K);
+        pts3d.push_back(Point3f(ptemp.x * dd, ptemp.y * dd, dd));
+        pts2d.push_back(ky2[m.trainIdx].pt);
+    }
+
+    // R: 旋转矩阵， r: 旋转向量, t: 平移向量
+    Mat R, r, t;
+    // use cv::solvePnP
+    solvePnP(pts3d, pts2d, K, Mat(), r, t, false, SOLVEPNP_EPNP);
+    // use Rodrigues 得到旋转矩阵
+    Rodrigues(r, R);
+
+    //-- use BA 优化
+    //-- based on G2O
+    bundleAdjustment(pts3d, pts2d, K, R, t);
+
+    // ICP
+
+    /*
+    //-- 估计两张图像间运动
+    Mat R,t;
+    pose_estimation_2d2d ( keypoints_1, keypoints_2, matches, R, t );
+
+    //-- 验证E=t^R*scale
+    Mat t_x = ( Mat_<double>( 3,3 ) << 0, -t.at<double>( 2,0 ), t.at<double>( 1,0 ), t.at<double>( 2,0 ), 0, -t.at<double>( 0,0 ), -t.at<double>( 1.0 ), t.at<double>( 0,0 ), 0 );
+
+    cout<<"t^R="<<endl<<t_x*R<<endl;
+
+    //-- 验证对极约束
+    for ( DMatch m: matches )
+    {
+        Point2d pt1 = pixel2cam ( keypoints_1[ m.queryIdx ].pt, K );
+        Mat y1 = ( Mat_<double>( 3,1 ) << pt1.x, pt1.y, 1 );
+        Point2d pt2 = pixel2cam ( keypoints_2[ m.trainIdx ].pt, K );
+        Mat y2 = ( Mat_<double>( 3,1 ) << pt2.x, pt2.y, 1 );
+        Mat d = y2.t() * t_x * R * y1;
+        cout << "epipolar constraint = " << d << endl;
+    }
+    */
+
+    waitKey(0);
+
+    return 0;
+}
