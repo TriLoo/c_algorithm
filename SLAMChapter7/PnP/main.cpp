@@ -8,15 +8,16 @@
 #include "opencv2/features2d.hpp"
 #include "opencv2/calib3d.hpp"
 
+#include "Eigen/Core"
+#include "Eigen/Geometry"
+
 #include "g2o/core/base_vertex.h"
 #include "g2o/core/base_unary_edge.h"
 #include "g2o/core/block_solver.h"
 #include "g2o/core/optimization_algorithm_levenberg.h"
-#include "g2o/core/optimization_algorithm_gauss_newton.h"
-#include "g2o/core/optimization_algorithm_dogleg.h"
-#include "g2o/solvers/dense/linear_solver_dense.h"
+#include "g2o/solvers/csparse/linear_solver_csparse.h"
+#include "g2o/types/sba/types_six_dof_expmap.h"
 
-#include "Eigen/Core"
 
 using namespace std;
 using namespace cv;
@@ -116,8 +117,75 @@ void pose_estimation_2d2d ( std::vector<KeyPoint> keypoints_1,
     recoverPose ( essential_matrix, points1, points2, R, t, focal_length, principal_point );
     cout<<"R is "<<endl<<R<<endl;
     cout<<"t is "<<endl<<t<<endl;
-
 }
+
+// bundle Adjustment
+void bundleAdjustment(
+        const vector<Point3f> pts3d,    // 相机坐标系下的三维坐标
+        const vector<Point2f> pts2d,    // 像素坐标
+        const Mat &K,
+        Mat &R, Mat &t
+)
+{
+    // 初始化g2o
+    typedef g2o::BlockSolver<g2o::BlockSolverTraits<6, 3>> Block;
+    Block::LinearSolverType* linearSolver = new g2o::LinearSolverCSparse<Block::PoseMatrixType>();
+    Block *solver_ptr = new Block(linearSolver);
+    g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
+    g2o::SparseOptimizer optimizer;
+    optimizer.setAlgorithm(solver);
+
+    // 定义顶点, vertex
+    g2o::VertexSE3Expmap* pose = new g2o::VertexSE3Expmap();
+    Eigen::Matrix3d R_mat;
+    R_mat <<
+            R.at<double>(0, 0), R.at<double>(0, 1), R.at<double>(0, 2),
+            R.at<double>(1, 0), R.at<double>(1, 1), R.at<double>(1, 2),
+            R.at<double>(2, 0), R.at<double>(2, 1), R.at<double>(2, 2);
+    pose->setId(0);
+    pose->setEstimate(g2o::SE3Quat(R_mat, Eigen::Vector3d(t.at<double>(0, 0), t.at<double>(1, 0), t.at<double>(2, 0))));
+    optimizer.addVertex(pose);
+
+    int index = 1;
+    for (const Point3f p : pts3d)
+    {
+        g2o::VertexSBAPointXYZ* point = new g2o::VertexSBAPointXYZ();
+        point->setId(index++);
+        point->setEstimate(Eigen::Vector3d(p.x, p.y, p.z));
+        point->setMarginalized(true);
+        optimizer.addVertex(point);
+    }
+
+    // parameter: camera intrinsics
+    g2o::CameraParameters* camera = new g2o::CameraParameters(
+            K.at<double>(0, 0), Eigen::Vector2d(K.at<double>(0, 2), K.at<double>(1, 2)), 0
+    );
+    camera->setId(0);
+    optimizer.addParameter(camera);
+
+    // edges
+    index = 1;
+    for(const Point2f p : pts2d)
+    {
+        g2o::EdgeProjectXYZ2UV* edge = new g2o::EdgeProjectXYZ2UV();
+        edge->setId(index);
+        edge->setVertex(0, dynamic_cast<g2o::VertexSBAPointXYZ *>(optimizer.vertex(index)));
+        edge->setVertex(1, pose);
+        edge->setMeasurement(Eigen::Vector2d(p.x, p.y));
+        edge->setParameterId(0, 0);
+        edge->setInformation(Eigen::Matrix2d::Identity());
+        optimizer.addEdge(edge);
+        index++;
+    }
+
+    optimizer.setVerbose(true);
+    optimizer.initializeOptimization();
+    optimizer.optimize(100); // iteration
+
+    cout << "After optimization: " << endl;
+    cout << "T=" << endl << Eigen::Isometry3d(pose->estimate()).matrix() << endl;
+}
+
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
@@ -162,7 +230,7 @@ int main() {
 
     //-- use BA 优化
     //-- based on G2O
-
+    bundleAdjustment(pts3d, pts2d, K, R, t);
 
 
     /*
