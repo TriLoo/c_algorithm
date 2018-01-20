@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/smher/myCode/SLAMs/chapter10/common/flags/command_args.cpp
+command_args.h
+/home/smher/myCode/SLAMs/chapter10/common/flags/command_args.h
+cstdlib
+-
+cstring
+-
+fstream
+-
+algorithm
+-
+functional
+-
+
+/home/smher/myCode/SLAMs/chapter10/common/flags/command_args.h
+string
+-
+vector
+-
+iostream
+-
+sstream
+-
+
