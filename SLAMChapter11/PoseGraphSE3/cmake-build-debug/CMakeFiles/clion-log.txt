@@ -1,0 +1,8 @@
+/home/smher/Documents/Linux_setup_files/clion-2017.1.3/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/smher/myCode/SLAMs/chapter11/PoseGraphSE3
+-- Found required Ceres dependency: Eigen version 3.2.0 in /usr/include/eigen3
+-- Found required Ceres dependency: glog
+-- Found required Ceres dependency: gflags
+-- Found Ceres version: 1.13.0 installed in: /usr/local with components: [LAPACK, SuiteSparse, SparseLinearAlgebraLibrary, CXSparse, SchurSpecializations, OpenMP]
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/smher/myCode/SLAMs/chapter11/PoseGraphSE3/cmake-build-debug
