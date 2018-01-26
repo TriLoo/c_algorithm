@@ -1,0 +1,37 @@
+/home/smher/Documents/Linux_setup_files/clion-2017.1.3/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/smher/myCode/SLAMs/chapter11/Gtsam
+CMake Warning at CMakeLists.txt:26 (find_package):
+  By not providing "FindGTSAMCMakeTools.cmake" in CMAKE_MODULE_PATH this
+  project has asked CMake to find a package configuration file provided by
+  "GTSAMCMakeTools", but CMake did not find one.
+
+  Could not find a package configuration file provided by "GTSAMCMakeTools"
+  with any of the following names:
+
+    GTSAMCMakeToolsConfig.cmake
+    gtsamcmaketools-config.cmake
+
+  Add the installation prefix of "GTSAMCMakeTools" to CMAKE_PREFIX_PATH or
+  set "GTSAMCMakeTools_DIR" to a directory containing one of the above files.
+  If "GTSAMCMakeTools" provides a separate development package or SDK, be
+  sure it has been installed.
+
+
+CMake Error at CMakeLists.txt:27 (find_package):
+  By not providing "FindGTSAM.cmake" in CMAKE_MODULE_PATH this project has
+  asked CMake to find a package configuration file provided by "GTSAM", but
+  CMake did not find one.
+
+  Could not find a package configuration file provided by "GTSAM" with any of
+  the following names:
+
+    GTSAMConfig.cmake
+    gtsam-config.cmake
+
+  Add the installation prefix of "GTSAM" to CMAKE_PREFIX_PATH or set
+  "GTSAM_DIR" to a directory containing one of the above files.  If "GTSAM"
+  provides a separate development package or SDK, be sure it has been
+  installed.
+
+
+-- Configuring incomplete, errors occurred!
+See also "/home/smher/myCode/SLAMs/chapter11/Gtsam/cmake-build-debug/CMakeFiles/CMakeOutput.log".
