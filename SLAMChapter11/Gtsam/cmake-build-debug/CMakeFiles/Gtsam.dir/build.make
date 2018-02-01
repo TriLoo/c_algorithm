@@ -90,6 +90,24 @@ Gtsam_EXTERNAL_OBJECTS =
 
 Gtsam: CMakeFiles/Gtsam.dir/main.cpp.o
 Gtsam: CMakeFiles/Gtsam.dir/build.make
+Gtsam: /usr/lib/x86_64-linux-gnu/libcholmod.so
+Gtsam: /usr/lib/x86_64-linux-gnu/libamd.so
+Gtsam: /usr/lib/x86_64-linux-gnu/libcolamd.so
+Gtsam: /usr/lib/x86_64-linux-gnu/libcamd.so
+Gtsam: /usr/lib/x86_64-linux-gnu/libccolamd.so
+Gtsam: /usr/local/lib/libmetis.so
+Gtsam: /usr/lib/x86_64-linux-gnu/libsuitesparseconfig.a
+Gtsam: /usr/local/lib/libgtsam.so.4.0.0
+Gtsam: /usr/lib/x86_64-linux-gnu/libboost_serialization.so
+Gtsam: /usr/lib/x86_64-linux-gnu/libboost_system.so
+Gtsam: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
+Gtsam: /usr/lib/x86_64-linux-gnu/libboost_thread.so
+Gtsam: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
+Gtsam: /usr/lib/x86_64-linux-gnu/libboost_timer.so
+Gtsam: /usr/lib/x86_64-linux-gnu/libboost_chrono.so
+Gtsam: /usr/lib/libtbb.so
+Gtsam: /usr/lib/libtbbmalloc.so
+Gtsam: /usr/local/lib/libmetis.so
 Gtsam: CMakeFiles/Gtsam.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/smher/myCode/SLAMs/chapter11/Gtsam/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Gtsam"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Gtsam.dir/link.txt --verbose=$(VERBOSE)

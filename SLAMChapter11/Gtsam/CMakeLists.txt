@@ -13,11 +13,13 @@ include_directories( "/usr/include/eigen3" )
 
 # sophus
 find_package( Sophus REQUIRED )
-include_directories( ${Sophus_INCLUDE_DIRS} )
+#message(${Sophus_INCLUDE_DIRS})
+include_directories(${Sophus_INCLUDE_DIRS})
 
 # g2o
 find_package( G2O REQUIRED )
-include_directories( ${G2O_INCLUDE_DIRS} )
+#message(STATUS ${G2O_INCLUDE_DIRS})
+include_directories(${G2O_INCLUDE_DIRS})
 
 find_package( Cholmod REQUIRED )
 include_directories( ${CHOLMOD_INCLUDE_DIR} )

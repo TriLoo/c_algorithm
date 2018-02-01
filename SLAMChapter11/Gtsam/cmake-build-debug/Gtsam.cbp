@@ -5,7 +5,7 @@
 		<Option title="Gtsam"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\Sophus\;CMake Files\..\..\Sophus\build\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\..\usr\local\;CMake Files\..\..\..\..\..\..\usr\local\lib\;CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\;CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\GTSAMCMakeTools\;CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\GTSAM\;CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\Ceres\;CMake Files\cmake_modules\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/home/smher/myCode/SLAMs/chapter11/Gtsam/cmake-build-debug"/>
@@ -44,11 +44,16 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/usr/include/eigen3"/>
+					<Add directory="/home/smher/myCode/SLAMs/Sophus"/>
+					<Add directory="/usr/include/suitesparse"/>
+					<Add directory="/usr/local/lib/cmake/GTSAM/../../../include"/>
+					<Add directory="/usr/local/include/gtsam/3rdparty/Eigen"/>
+					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/include/c++/4.8"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8"/>
 					<Add directory="/usr/include/c++/4.8/backward"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include"/>
-					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
@@ -67,11 +72,16 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/usr/include/eigen3"/>
+					<Add directory="/home/smher/myCode/SLAMs/Sophus"/>
+					<Add directory="/usr/include/suitesparse"/>
+					<Add directory="/usr/local/lib/cmake/GTSAM/../../../include"/>
+					<Add directory="/usr/local/include/gtsam/3rdparty/Eigen"/>
+					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/include/c++/4.8"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8"/>
 					<Add directory="/usr/include/c++/4.8/backward"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include"/>
-					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
@@ -89,6 +99,51 @@
 		</Unit>
 		<Unit filename="/home/smher/myCode/SLAMs/chapter11/Gtsam/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter11/Gtsam/../../Sophus/build/SophusConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\Sophus\build\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter11/Gtsam/../../../../../../usr/local/lib/cmake/GTSAMCMakeTools/GTSAMCMakeToolsConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\GTSAMCMakeTools\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter11/Gtsam/../../../../../../usr/local/lib/cmake/GTSAM/GTSAMConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\GTSAM\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter11/Gtsam/../../../../../../usr/local/lib/cmake/GTSAM/GTSAM-exports.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\GTSAM\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter11/Gtsam/../../../../../../usr/local/lib/cmake/GTSAM/GTSAM-exports-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\GTSAM\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter11/Gtsam/../../../../../../usr/local/lib/cmake/GTSAM/gtsam_extra.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\GTSAM\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter11/Gtsam/../../../../../../usr/local/lib/cmake/Ceres/CeresConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\Ceres\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter11/Gtsam/../../../../../../usr/local/lib/cmake/Ceres/CeresConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\Ceres\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter11/Gtsam/../../../../../../usr/local/lib/cmake/Ceres/FindEigen.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\Ceres\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter11/Gtsam/../../../../../../usr/local/lib/cmake/Ceres/FindGlog.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\Ceres\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter11/Gtsam/../../../../../../usr/local/lib/cmake/Ceres/FindGflags.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\Ceres\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter11/Gtsam/../../../../../../usr/local/lib/cmake/Ceres/CeresTargets.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\Ceres\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter11/Gtsam/../../../../../../usr/local/lib/cmake/Ceres/CeresTargets-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\Ceres\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter11/Gtsam/cmake_modules/FindG2O.cmake">
+			<Option virtualFolder="CMake Files\cmake_modules\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter11/Gtsam/cmake_modules/FindCholmod.cmake">
+			<Option virtualFolder="CMake Files\cmake_modules\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>
