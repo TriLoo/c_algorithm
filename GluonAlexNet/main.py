@@ -101,16 +101,34 @@ net = AlexNet()
 
 # Load parameters  OR  Train
 if os.path.exists('./AlexNet.params'):
-    net.collect_params().load('AlexNet.params', allow_missing=False)
+    #net.collect_params().load('AlexNet.params', allow_missing=False)
+    net.collect_params().load('AlexNet.params', ctx=mx.cpu(0), allow_missing=False)
+    print("Weight file exists.")
 else:
     # net.initialize(init=mx.init.Xavier())
     # Train
-    train(train_set, test_set, net, batch_size=batch_size, lr=0.01, mom=0.9, epochs=10, period=1)
+    train(train_set, test_set, net, batch_size=batch_size, lr=0.01, mom=0.9, epochs=2, period=1)
     # save parameters
     net.collect_params().save('AlexNet.params')
 
 # Test
+test_augs = [
+    image.CenterCropAug((224, 224))
+]
+def testClassify(net, fname):
+    with open(fname, 'rb') as f:
+        img = image.imdecode(f.read())
+    data, _ = transformTest(img, -1, test_augs)
+    plt.imshow(data.transpose((1, 2, 0)).asnumpy() / 255)
+    data = data.expand_dims(axis=0)
+    out = net(data)
+    out = nd.SoftmaxActivation(out)
+    pred = int(nd.argmax(out, axis=1).asscalar())
+    prob = out[0][pred].asscalar()
+    label = train_set.synsets
+    return ('With prob=%f, %s'%(prob, label[pred]))
 
+print(testClassify(net, '/home/smher/.mxnet/datasets/oxford102/test_datas/0_data/image_06736.jpg'))
 
 '''
 # Prepare the trainning data
