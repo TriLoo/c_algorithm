@@ -5,6 +5,11 @@ from mxnet import ndarray as nd
 import os
 import utils
 from mxnet import image
+import numpy as np
+
+import matplotlib as mpl
+mpl.rcParams['figure.dpi'] = 120
+from matplotlib import pyplot as plt
 
 # Define the model
 class AlexNet(gluon.nn.Block):
@@ -40,14 +45,74 @@ class AlexNet(gluon.nn.Block):
     def forward(self, x):
         return nd.softmax(self.net(x))
 
+# Get the data
+def transformTest(data, label, augs_):
+    data = data.astype('float32')
+    for aug in augs_:
+        data = aug(data)
+    data = nd.transpose(data, (2, 0, 1))
+    return data, nd.array([label]).asscalar().astype('float32')
+
+#batch_size = 128     # set 8 to test
+batch_size = 1     # set 8 to test
+augs = [
+    image.HorizontalFlipAug(.5),
+    image.CenterCropAug((224, 224))
+    #image.RandomCropAug((224, 224))
+]
+train_set = gluon.data.vision.ImageFolderDataset(root='~/.mxnet/datasets/oxford102/train_datas', transform=lambda X, y: transformTest(X, y, augs))
+test_set = gluon.data.vision.ImageFolderDataset(root='~/.mxnet/datasets/oxford102/test_datas', transform=lambda X, y: transformTest(X, y, augs))
+# define loss function
+softLoss = gluon.loss.SoftmaxCrossEntropyLoss()
+
+
 # define Train Function
-def train(train_data, test_data, net, batch_size, lr, mom, epochs, period):
+def train(train_set, test_set, net, batch_size, lr, mom, epochs, period):
     assert period >= batch_size and period % batch_size == 0
     net.collect_params().initialize(mx.init.Normal(sigma=0.01), force_reinit=True)
+    # momenta approach
+    trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate':lr, 'momentum':mom})
+
+    total_loss = [100]
+
+    train_data = gluon.data.DataLoader(train_set, batch_size=batch_size, shuffle=True)
+    test_data = gluon.data.DataLoader(test_set, batch_size=batch_size)
+
+    for epoch in range(epochs):
+        for batch_i, (data, label) in enumerate(train_data):
+            with autograd.record():
+                output = net(data)
+                loss = softLoss(output, label)
+            loss.backward()
+            trainer.step(batch_size)
+
+            if batch_i * batch_size % period == 0:
+                total_loss.append(np.mean(softLoss(net(data), label).asnumpy()))
+        print('Batch Size: %d, Learning rate: %f, Epoch: %d, loss %.4e'%(batch_size, lr, epoch, total_loss[-1]))
+
+    x_axis = np.linspace(0, epochs, len(total_loss), endpoint=True)
+    plt.semilogx(x_axis, total_loss)
+    plt.xlabel('epoch')
+    plt.ylabel('loss')
+    plt.show()
 
 # define training target
 net = AlexNet()
 
+# Load parameters  OR  Train
+if os.path.exists('./AlexNet.params'):
+    net.collect_params().load('AlexNet.params', allow_missing=False)
+else:
+    # net.initialize(init=mx.init.Xavier())
+    # Train
+    train(train_set, test_set, net, batch_size=batch_size, lr=0.01, mom=0.9, epochs=10, period=1)
+    # save parameters
+    net.collect_params().save('AlexNet.params')
+
+# Test
+
+
+'''
 # Prepare the trainning data
 def apply_aug_lists(img, augs):
     for aug in augs:
@@ -63,46 +128,14 @@ def get_transform(augs):
         return data, label.astype('float32')
     return transform
 
-def transformTest(data, label, augs_):
-    data = data.astype('float32')
-    for aug in augs_:
-        data = aug(data)
-    data = nd.transpose(data, (2, 0, 1))
-    return data, nd.array([label]).asscalar().astype('float32')
-
-batch_size = 32     # set 8 to test
-augs = [
-    image.HorizontalFlipAug(.5),
-    image.CenterCropAug((224, 224))
-    #image.RandomCropAug((224, 224))
-]
-
 #train_set = gluon.data.vision.ImageFolderDataset(root='~/.mxnet/datasets/oxford102/train_datas', transform=get_transform(augs))
 #train_set = gluon.data.vision.ImageFolderDataset(root='../data/hotdog/train', transform=get_transform(augs))
-train_set = gluon.data.vision.ImageFolderDataset(root='~/.mxnet/datasets/oxford102/train_datas', transform=lambda X, y: transformTest(X, y, augs))
-test_set = gluon.data.vision.ImageFolderDataset(root='~/.mxnet/datasets/oxford102/test_datas', transform=get_transform(augs))
 
-train_data = gluon.data.DataLoader(train_set, batch_size=batch_size, shuffle=True)
-test_data = gluon.data.DataLoader(test_set, batch_size=batch_size)
 
 for X,label in train_data:
     X = X.transpose((0, 2, 3, 1)).clip(0, 255)/255
     #X = X.transpose((0, 2, 3, 1)).clip(0, 255)/255
-    utils.show_images(X, 4, 8)
+    utils.show_images(X, 8, 16)
     print(label)
     break
-
-
-
-# Load parameters  OR  Train
-if os.path.exists('./AlexNet.params'):
-    net.collect_params().load('AlexNet.params', allow_missing=False)
-else:
-    net.initialize(init=mx.init.Xavier())
-    # Train
-    # train()
-    # save parameters
-    # net.collect_params().save('AlexNet.params')
-
-# Test
-
+'''
