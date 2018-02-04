@@ -1,0 +1,1 @@
+/usr/bin/c++   -g   CMakeFiles/DenseMapSingle.dir/main.cpp.o  -o DenseMapSingle 
