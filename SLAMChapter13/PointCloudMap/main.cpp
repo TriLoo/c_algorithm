@@ -37,7 +37,7 @@ int main() {
     {
         boost::format fmt("../data/%s/%d.%s");
         colorImgs.push_back(imread((fmt%"color"%(i+1)%"png").str()));
-        depthImgs.push_back(imread((fmt%"depth"%(i+1)%"png").str()));
+        depthImgs.push_back(imread((fmt%"depth"%(i+1)%"pgm").str(), IMREAD_UNCHANGED));
 
         double data[7] = {0};
         for (int j = 0; j < 7; ++j)

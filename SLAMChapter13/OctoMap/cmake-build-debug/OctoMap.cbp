@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="OctoMap"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\..\usr\local\;CMake Files\..\..\..\..\..\..\usr\local\share\;CMake Files\..\..\..\..\..\..\usr\local\share\OpenCV\;CMake Files\..\..\..\..\..\..\usr\local\share\octomap\;CMake Files\..\..\..\..\..\..\usr\share\;CMake Files\..\..\..\..\..\..\usr\share\pcl-1.7\;CMake Files\..\..\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\..\..\usr\lib\vtk-5.8\;CMake Files\..\..\..\..\..\..\usr\lib\vtk-5.8\CMake\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="OctoMap">
+				<Option output="/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/OctoMap" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDISABLE_PCAP"/>
+					<Add option="-DDISABLE_PNG"/>
+					<Add option="-DEIGEN_USE_NEW_STDVECTOR"/>
+					<Add option="-DEIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET"/>
+					<Add option="-DFLANN_STATIC"/>
+					<Add directory="/usr/local/include/opencv"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/eigen3"/>
+					<Add directory="/usr/include/vtk-5.8"/>
+					<Add directory="/usr/include/pcl-1.7"/>
+					<Add directory="/usr/include/ni"/>
+					<Add directory="/usr/include/openni2"/>
+					<Add directory="/usr/include/c++/4.8"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8"/>
+					<Add directory="/usr/include/c++/4.8/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 OctoMap"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="OctoMap/fast">
+				<Option output="/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/OctoMap" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDISABLE_PCAP"/>
+					<Add option="-DDISABLE_PNG"/>
+					<Add option="-DEIGEN_USE_NEW_STDVECTOR"/>
+					<Add option="-DEIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET"/>
+					<Add option="-DFLANN_STATIC"/>
+					<Add directory="/usr/local/include/opencv"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/eigen3"/>
+					<Add directory="/usr/include/vtk-5.8"/>
+					<Add directory="/usr/include/pcl-1.7"/>
+					<Add directory="/usr/include/ni"/>
+					<Add directory="/usr/include/openni2"/>
+					<Add directory="/usr/include/c++/4.8"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8"/>
+					<Add directory="/usr/include/c++/4.8/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 OctoMap/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/smher/myCode/SLAMs/chapter13/OctoMap/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/main.cpp">
+			<Option target="OctoMap"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/local/share/OpenCV/OpenCVConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\share\OpenCV\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/local/share/OpenCV/OpenCVConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\share\OpenCV\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/local/share/OpenCV/OpenCVModules.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\share\OpenCV\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/local/share/OpenCV/OpenCVModules-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\share\OpenCV\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/local/share/octomap/octomap-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\share\octomap\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/local/share/octomap/octomap-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\share\octomap\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/share/pcl-1.7/PCLConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\pcl-1.7\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/share/pcl-1.7/PCLConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\pcl-1.7\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/lib/vtk-5.8/VTKConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\lib\vtk-5.8\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/lib/vtk-5.8/VTKConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\lib\vtk-5.8\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/lib/vtk-5.8/VTKConfig-Java.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\lib\vtk-5.8\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/lib/vtk-5.8/VTKConfig-Python.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\lib\vtk-5.8\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/lib/vtk-5.8/VTKConfig-Tcl.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\lib\vtk-5.8\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/lib/vtk-5.8/VTKConfigQt.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\lib\vtk-5.8\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/lib/vtk-5.8/VTKTargets.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\lib\vtk-5.8\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/lib/vtk-5.8/VTKTargets-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\lib\vtk-5.8\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/lib/vtk-5.8/UseVTK.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\lib\vtk-5.8\"/>
+		</Unit>
+		<Unit filename="/home/smher/myCode/SLAMs/chapter13/OctoMap/../../../../../../usr/lib/vtk-5.8/CMake/vtkMakeInstantiator.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\lib\vtk-5.8\CMake\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
