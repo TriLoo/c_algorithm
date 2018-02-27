@@ -1,126 +1,55 @@
 #include <iostream>
-//#include "memory"
-#include "random"
-#include "ctime"
+#include "vector"
+#include "iterator"
 #include "algorithm"
+#include "stdexcept"
 
 using namespace std;
 
-class QuickSort
+int MinInOrder(const vector<int> &data)
 {
-public:
-    QuickSort(int *d, int len):aux(new int [len]())
+    if (data.empty())
+        throw runtime_error("No input data.");
+
+    auto beg = data.cbegin();
+    auto tail = data.cend();
+    auto mid = ((tail - beg) >> 1) + beg;   // correct
+
+    int value = *beg;
+
+    // Cannot return the minimum value
+    if (*mid == *beg && *beg == *tail)
+        throw runtime_error("Not sorted data.");
+
+    // Not a  rotated array
+    if (greater<int>()(*tail, *beg))
+        return value;
+
+    // Rotated array
+    while(tail > beg + 1)
     {
-        for (int i = 0; i < len; ++i)
-            aux[i] = d[i];
-    }
-    ~QuickSort() {delete [] aux;}
-    //QuickSort(int *d): aux(d){}
-    //~QuickSort(){}
+        if (greater<int>()(*mid, *beg))
+            beg = mid;
+        else
+            tail = mid;
 
-    int Partion(int *data, int lo, int hi);
-    void qc(int data[], int lo, int hi);
-    void qc(int data[], int len);
-private:
-    void exch(int *d, int i, int j);
-    int *aux;
-};
-
-void QuickSort::exch(int *d, int i, int j)
-{
-    if (i == j)
-        return;
-
-    int t = d[i];
-    d[i] = d[j];
-    d[j] = t;
-}
-
-int QuickSort::Partion(int *data, int lo, int hi)
-{
-    //static default_random_engine e(time(0));
-    //static uniform_int_distribution<int> u(lo, hi);
-
-    //int p = u(e);
-    //cout << p << endl;
-
-    int com = data[lo];
-    int i = lo, j = hi + 1;
-
-    while(true)
-    {
-        //while(less<int>(aux[++i], static_cast<int>(com)));
-        while(data[++i] < com)
-            if( i == hi)
-                break;
-        while(data[--j] > com)
-            if (j == lo)
-                break;
-        if(i >= j)
-            break;
-        exch(data, i, j);
+        mid = ((tail - beg) >> 1) + beg;
     }
 
-    exch(data, lo, j);
-
-    return j;
+    return *tail;
 }
-
-void QuickSort::qc(int *data, int len)
-{
-    if (len == 0)
-        return;
-    else
-    {
-        int mid = len >> 1;
-        //int mid = Partion(0, len);    // 可能包含len, 即mid == len : True
-        //if (mid == len)
-           // mid = len >> 1;
-
-        qc(data, 0, len);
-    }
-}
-
-void QuickSort::qc(int *data, int lo, int hi)
-{
-    if (lo >= hi)
-        return ;
-
-    int j = Partion(data, lo, hi);
-    cout << j << endl;
-    qc(data, lo, j - 1);
-    qc(data, j + 1, hi);
-}
-
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
-    int data[10] = {0};
 
-    default_random_engine e(time(0));
-    uniform_int_distribution<int> u(0, 100);
+    vector<int> data{3, 4, 5, 0, 2};
 
-    for (auto &ele : data)
-        ele = u(e);
+    int min = MinInOrder(data);
+    cout << "Min = " << min << endl;
 
-    cout << "before" << endl;
-    for (auto ele : data)
-    {
-        cout << ele << endl;
-    }
-
-    QuickSort qs(data, 9);
-    qs.qc(data, 9);
-
-    // For test
-    int t = 5 >>  1;
-    cout << "5 >> 1: " << t << endl;
-    cout << "after" << endl;
-    for (auto ele : data)
-    {
-        cout << ele << endl;
-    }
+    // Test less algorithm
+    //if (less<int>()(1, 2))
+        //cout << "True." << endl;
 
     return 0;
 }
-
