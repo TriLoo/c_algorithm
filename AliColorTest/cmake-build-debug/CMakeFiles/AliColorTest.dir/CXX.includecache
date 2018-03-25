@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/smher/myCode/C++/AliColorTest/main.cpp
+iostream
+-
+vector
+-
+memory
+/home/smher/myCode/C++/AliColorTest/memory
+cmath
+/home/smher/myCode/C++/AliColorTest/cmath
+

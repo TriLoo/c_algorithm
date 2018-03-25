@@ -1,0 +1,3 @@
+/home/smher/myCode/C++/AliColorTest/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/smher/myCode/C++/AliColorTest/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/smher/myCode/C++/AliColorTest/cmake-build-debug/CMakeFiles/AliColorTest.dir
