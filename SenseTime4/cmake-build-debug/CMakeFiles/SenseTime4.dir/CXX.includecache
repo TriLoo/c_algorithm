@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/smher/myCode/Algorithms/SenseTime4/main.cpp
+iostream
+-
+vector
+/home/smher/myCode/Algorithms/SenseTime4/vector
+cassert
+/home/smher/myCode/Algorithms/SenseTime4/cassert
+memory
+/home/smher/myCode/Algorithms/SenseTime4/memory
+

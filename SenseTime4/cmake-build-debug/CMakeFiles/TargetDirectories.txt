@@ -1,0 +1,3 @@
+/home/smher/myCode/Algorithms/SenseTime4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/smher/myCode/Algorithms/SenseTime4/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/smher/myCode/Algorithms/SenseTime4/cmake-build-debug/CMakeFiles/SenseTime4.dir
