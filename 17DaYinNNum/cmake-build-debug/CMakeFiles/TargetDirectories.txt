@@ -1,3 +1,0 @@
-/home/look/CLionProjects/17DaYinNNum/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/look/CLionProjects/17DaYinNNum/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/look/CLionProjects/17DaYinNNum/cmake-build-debug/CMakeFiles/17DaYinNNum.dir

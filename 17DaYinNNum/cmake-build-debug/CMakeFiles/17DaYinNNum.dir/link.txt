@@ -1,1 +1,0 @@
-/usr/bin/c++   -g   CMakeFiles/17DaYinNNum.dir/main.cpp.o  -o 17DaYinNNum 
