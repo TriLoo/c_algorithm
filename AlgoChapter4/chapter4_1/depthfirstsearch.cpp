@@ -113,8 +113,11 @@ void DepthFirstSearch::dfs(Graph G, int s)
     marked.at(s) = 1;   // Visited
     for (auto w : G.Adjs(s))
     {
-        edgeTo.at(w) = s;
-        dfs(G, w);      // 深度优先
+        if (!marked.at(w))
+        {
+            edgeTo.at(w) = s;
+            dfs(G, w);      // 深度优先
+        }
     }
 }
 

@@ -3,56 +3,54 @@
 
 using namespace std;
 
-ostream&  print_char_vector(const vector<char> & nums)
+// 老老实实把一件事做好! 2018.07.29
+
+void printNums(vector<char>& num)
 {
-    bool isBegion0 = true;
-    size_t N = nums.size();
-
-    for (auto ele : nums)
+    bool isBeginZero = true;
+    for (const auto& ele : num)
     {
-        if ((ele != '0') && isBegion0)
-            isBegion0 = false;
+        if(ele != '0' && isBeginZero)
+            isBeginZero = false;
 
-        if (!isBegion0)
+        if (!isBeginZero)
+        {
             cout << ele;
-    }
-    if (isBegion0)      // 输出最开始的0
-        cout << '0';
-
-    return cout;
-}
-
-void printOneToN_Curr(const int length, vector<char>& a)
-{
-    if (length )
-}
-
-// N: 十进制的位数
-void printOneToN(size_t N)
-{
-    // 输入检查
-    if (N <= 0)
-        return;
-
-    for (int i = 0; i < N; ++i)
-    {
-        vector<char> nums(i+1, '0');
-        for (int j = 0; j < 9; ++j) {
-            nums.at(i) = static_cast<char>(j + '0');
-            printOneToN_Curr(j+1, nums);
         }
     }
+    if (!isBeginZero)
+        cout << endl;
+}
+
+void printOneToN(vector<char>& nums, int starts)
+{
+    if (nums.size() == starts)
+    {
+        printNums(nums);
+        return;
+    }
+    for (int i = 0; i <= 9; ++i)
+    {
+        nums.at(starts) = i + '0';
+        printOneToN(nums, starts+1);
+    }
+}
+
+void printOneToN(int N)
+{
+    if (N <= 0)        // N 大于 1
+        return;
+
+    vector<char> nums(N, '0');
+    printOneToN(nums, 0);
 }
 
 int main() {
-    size_t N;
+    //std::cout << "Hello, World!" << std::endl;
+    int N;
     cin >> N;
 
     printOneToN(N);
-    cout << '1' + 1 << endl;
-    cout << '1' << endl;
-    //cout << static_cast<char>(1) << endl;
-    //cout << static_cast<char>(48) << endl;
 
     return 0;
 }
