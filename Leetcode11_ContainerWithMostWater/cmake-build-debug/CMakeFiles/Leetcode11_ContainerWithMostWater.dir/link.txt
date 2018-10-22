@@ -1,1 +1,0 @@
-/usr/bin/c++   -g   CMakeFiles/Leetcode11_ContainerWithMostWater.dir/main.cpp.o  -o Leetcode11_ContainerWithMostWater 
