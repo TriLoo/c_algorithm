@@ -25,6 +25,12 @@ int threeSumClosest(vector<int>& nums, int target)
     sort(nums.begin(), nums.end());
     for(int i = 0; i < nums.size(); ++i)
     {
+        // 参考：https://leetcode.com/problems/3sum-closest/discuss/184500/C++-O(N2)-4ms-solution-faster-than-100-by-adding-one-line-of-extra-checking
+        // We can speed up the code by checking if the current number (第一个候选元素, 后面的数只会更大) if both greater than 0 and target,
+        //      if thats the case, there's no point for us to do further checking!
+        // beat from 30% to 100% ! ! !
+        if(i > 0 && nums.at(i) > 0 && nums.at(i) > target)
+            return currSum;
         //currSum += nums.at(i);
         int j = i+1, k = nums.size() - 1;
         while(j < k)
@@ -50,6 +56,12 @@ int threeSumClosest(vector<int>& nums, int target)
         }
     }
     return currSum;
+}
+
+int threeSumClosestFastest(vector<int> &nums, int target)
+{
+
+    return 0;
 }
 
 int main() {
